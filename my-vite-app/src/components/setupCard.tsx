@@ -1,21 +1,17 @@
-import { CoinbaseLogo } from "../assets/logos"
 import { motion } from "framer-motion"
 import { useState } from "react"
-
-const cardData = [
-    {
-        name: "Basic",
-        wallet: "Coinbase Wallet",
-        logo: <CoinbaseLogo></CoinbaseLogo>
-    }
-]
+import { useAtom } from "jotai"
+import { extensionAtom } from "../atoms/extension"
+import { cardData } from "../data/cardData"
 
 export default function SetupCard() {
 
     const [amount, setAmount] = useState("")
+    const [,setExtension] = useAtom(extensionAtom)
 
-    async function handleOnboard() {
-
+    async function handleOnboard(wallet: string, extensionLink: string) {
+        setExtension(true)
+        window.open(extensionLink, "_blank")
     }
 
     return (
@@ -51,7 +47,7 @@ export default function SetupCard() {
                             value={amount}
                             onChange={(e) => setAmount(e.target.value)}
                             />
-                            <button className="w-full bg-zinc-200 text-zinc-800 font-medium py-3 rounded-xl transition-colors duration-300" onClick={handleOnboard}>
+                            <button className="w-full bg-zinc-200 text-zinc-800 font-medium py-3 rounded-xl transition-colors duration-300" onClick={() => handleOnboard(e.wallet, e.extensionLink)}>
                             Proceed
                             </button>
                         </div>

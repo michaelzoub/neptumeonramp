@@ -13,7 +13,6 @@ export async function createWallet() {
     console.log(`Address: ${address}`);
 
     //this is the privateKey, make sure headers carefully transport this so privy can interact with it
-
     let privateKey = address.export();
     return privateKey
 }

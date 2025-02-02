@@ -1,18 +1,36 @@
 import { motion } from "framer-motion"
 import { useState } from "react"
 import Messages from "./messages"
-import { messageAtom } from "../atoms/messages"
+import { messageAtom, messagesAtom } from "../atoms/messages"
 import { useAtom } from "jotai"
+import { questionOnramp } from "../services/question"
 
 export default function LlmSection() {
 
     const [hover, setHover] = useState(false)
     const [expand, setExpand] = useState(false)
-    const [,setMessage] = useAtom(messageAtom)
+    const [, setMessages] = useAtom(messagesAtom)
     const [userMessage, setUserMessage] = useState("")
 
-    function handleMessageSend() {
-        setMessage(userMessage)
+    async function handleMessageSend() {
+        const timeSplit = new Date().toLocaleTimeString().split(":")[0] + ":" + new Date().toLocaleTimeString().split(":")[1]
+        const randomid = Math.floor(Math.random() * 1000)
+        setMessages((prev) => [...prev, {
+            id: randomid,
+            message: userMessage,
+            sender: "user",
+            timestamp: timeSplit,
+        }])
+        //comunicate with backend:
+        const response = await questionOnramp(userMessage)
+        setUserMessage("")
+        setMessages((prev) => [...prev, {
+            id: randomid,
+            message: response,
+            sender: "assistant",
+            timestamp: timeSplit,
+        }])
+        return
     }
 
     return (
@@ -32,7 +50,7 @@ export default function LlmSection() {
                     initial: { rotate: 0 },
                     expand: { rotate: 90 }
                 }}
-                transition={{ type: "spring", stiffness: 100, damping: 10 }}
+                transition={{ type: "spring", damping:20, stiffness:450, duration: 0.1 }}
                 >
                 <motion.div
                     animate={hover ? (expand ? "" : "hover") : "initial"}
@@ -40,7 +58,7 @@ export default function LlmSection() {
                     initial: { x: 0 },
                     hover: { x: 4 }
                     }}
-                    transition={{ type: "spring", stiffness: 100, damping: 10 }}
+                    transition={{ type: "spring", stiffness: 100, damping: 10, duration: 0.1 }}
                 >
                     <svg width={24} height={24} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -55,7 +73,7 @@ export default function LlmSection() {
                 </motion.div>
 
             </motion.div>
-            <motion.div
+            <motion.div className="scrollbar"
                 initial={{ opacity: 0, height: 0 }} 
                 animate={{
                     opacity: expand ? 1 : 0, 

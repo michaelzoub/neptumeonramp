@@ -1,6 +1,6 @@
 import { apiEndpoint } from "../data/apiEndpoint"
 
-export async function questionOnramp(wallet: string, depositAmount: number, ) {
+export async function onramp(wallet: string, depositAmount: number) {
     const response = await fetch(`${apiEndpoint}/onramp`, {
         method: "POST",
         headers: {

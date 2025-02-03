@@ -1,5 +1,6 @@
 import { runCovalentAgent } from "./utils/covalentAgent";
 import { createWallet } from "./utils/createWallet";
+import { getSessionToken } from "./utils/getCBOnrampSessionToken";
 
 console.log("Hello via Bun!");
 
@@ -24,8 +25,11 @@ Bun.serve({
 
             //wallet has already prompted user to download whichever kit they picked
             async function onramp() {
-                const privateKey = await createWallet()
-                return new Response(JSON.stringify(privateKey))
+                const body = await req.json()
+                const createObject = await createWallet()
+                //once wallet is setup, get session token to fund account:
+                const session = await getSessionToken(createObject.address.toString(), ["ETH"])
+                return new Response(JSON.stringify(createObject))
             }
             return  onramp()
         }

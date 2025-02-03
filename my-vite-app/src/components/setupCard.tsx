@@ -3,15 +3,23 @@ import { useState } from "react"
 import { useAtom } from "jotai"
 import { extensionAtom } from "../atoms/extension"
 import { cardData } from "../data/cardData"
+import { onramp } from "../services/onramp"
 
 export default function SetupCard() {
 
     const [amount, setAmount] = useState("")
     const [,setExtension] = useAtom(extensionAtom)
 
-    async function handleOnboard(wallet: string, extensionLink: string) {
+    async function handleOnboard(wallet: string, extensionLink: string, depositAmount: string) {
+        const depositAmountParsed = Number(depositAmount)
+        if (!depositAmountParsed) {
+            console.error("No deposit amount")
+            return 
+        }
         setExtension(true)
         window.open(extensionLink, "_blank")
+        //service function
+        const result = await onramp(wallet, depositAmountParsed)
     }
 
     return (
@@ -47,7 +55,7 @@ export default function SetupCard() {
                             value={amount}
                             onChange={(e) => setAmount(e.target.value)}
                             />
-                            <button className="w-full bg-zinc-200 text-zinc-800 font-medium py-3 rounded-xl transition-colors duration-300" onClick={() => handleOnboard(e.wallet, e.extensionLink)}>
+                            <button className="w-full bg-zinc-200 text-zinc-800 font-medium py-3 rounded-xl transition-colors duration-300" onClick={() => handleOnboard(e.wallet, e.extensionLink, amount)}>
                             Proceed
                             </button>
                         </div>

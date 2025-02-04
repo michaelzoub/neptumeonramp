@@ -34,7 +34,7 @@ export default function LlmSection() {
     }
 
     return (
-        <motion.div className="w-[400px] h-[150px] bg-zinc-900 rounded-xl h-fit p-2 text-zinc-400 cursor-default"
+        <motion.div className="w-[400px] h-fit bg-zinc-900 rounded-xl p-2 text-zinc-400 cursor-default"
         transition={{ type: "spring", stiffness: 100, damping: 10 }}
         >
             <motion.div className="flex flex-row justify-between p-1 items-center h-fit"
@@ -73,19 +73,36 @@ export default function LlmSection() {
                 </motion.div>
 
             </motion.div>
-            <motion.div className="scrollbar"
-                initial={{ opacity: 0, height: 0 }} 
-                animate={{
-                    opacity: expand ? 1 : 0, 
-                    height: expand ? "auto" : 0, 
-                  }}
-                transition={{ duration: 0.2 }} 
+            <motion.div
+            className="scrollbar overflow-hidden"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: expand ? 1 : 0, height: expand ? "auto" : 0 }}
+            transition={{ duration: 0.2 }}
             >
+            <div className="scrollbar overflow-y-scroll max-h-[200px]">
                 <Messages color="" secondary="" />
-                <div className="flex flex-row gap-1">
-                    <input className="grow p-2 bg-zinc-800 w-full rounded-2xl" placeholder="Send msg" onChange={(e) => setUserMessage(e.target.value)}></input>
-                    <button className="w-fit p-2 bg-zinc-" onClick={handleMessageSend}>Send</button>
-                </div>
+            </div>
+
+            {expand && (
+                <motion.div
+                className="flex flex-row gap-1"
+                initial={{ opacity: 0, translateY: -10 }}
+                animate={{ opacity: 1, translateY: 0 }}
+                transition={{ duration: 0.2 }}
+                >
+                <input
+                    className="grow p-2 bg-zinc-800 w-full rounded-2xl"
+                    placeholder="Send msg"
+                    onChange={(e) => setUserMessage(e.target.value)}
+                />
+                <button
+                    className="w-fit p-2 bg-zinc-800 rounded-2xl"
+                    onClick={handleMessageSend}
+                >
+                    Send
+                </button>
+                </motion.div>
+            )}
             </motion.div>
         </motion.div>
     )

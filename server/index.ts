@@ -20,7 +20,7 @@ Bun.serve({
             return new Response(null, { headers: corsHeaders });
         }
 
-        if (req.url == "/onramp") {
+        if (url.pathname === "/onramp") {
             //here i'll create wallet and update logic for funding
 
             //wallet has already prompted user to download whichever kit they picked
@@ -29,21 +29,26 @@ Bun.serve({
                 const createObject = await createWallet()
                 //once wallet is setup, get session token to fund account:
                 const session = await getSessionToken(createObject.address.toString(), ["ETH"])
-                return new Response(JSON.stringify(createObject))
+                return new Response(JSON.stringify({
+                    privateKey: createObject,
+                    onrampUrl: session
+                }), { headers: corsHeaders })
             }
             return  onramp()
         }
 
-        if (req.url == "/onrampquestion") {
+        if (url.pathname === "/onrampquestion") {
             async function returning() {
-                //simply run the covalent ai agent and return response to frontend:
+                console.log("Onramp question hit.")
+                //simply run the covalent ai agent and return response to frontend: 
                 const body = await req.json()
                 const response = await runCovalentAgent(body, "")
-                return new Response(JSON.stringify(response))
+                console.log(response)
+                return new Response(JSON.stringify(response), { headers: corsHeaders })
             }
             return returning()
         }
 
-        return new Response("Bun!");
+        return new Response("Bun!", { headers: corsHeaders });
     },
   });

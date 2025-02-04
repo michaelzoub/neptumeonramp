@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 dotenv.config();
-const { GOLDRUSH_API } = process.env
-import { Agent, ZeeWorkflow } from '@covalenthq/ai-agent-sdk';
+const { GOLDRUSH_API, OPENAI_API_KEY } = process.env
+import { Agent, ZeeWorkflow, LLM } from '@covalenthq/ai-agent-sdk';
 import { ApiServices } from './invokeGoldrush';
 import { createTools } from './createTools';
 
@@ -13,6 +13,13 @@ const apiKey = GOLDRUSH_API
 
 
 export async function runCovalentAgent(userMessage: string, address: string) {
+
+
+    const llm = new LLM({
+        provider: "OPEN_AI",
+        name: "gpt-4o-mini",
+        apiKey: OPENAI_API_KEY,
+    });
 
     //run ApiServices to get information:
     const information = await ApiServices(address)
@@ -34,6 +41,7 @@ export async function runCovalentAgent(userMessage: string, address: string) {
             transactions: tools.TransactionsTool,
         },
     });
+    
 
     const zee = new ZeeWorkflow({
         description: userMessage,

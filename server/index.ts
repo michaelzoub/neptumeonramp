@@ -1,4 +1,4 @@
-import { runCovalentAgent } from "./utils/covalentAgent";
+import { runCovalentAgent } from "./utils/covalent/covalentAgent";
 import { createWallet } from "./utils/createWallet";
 import { getSessionToken } from "./utils/getCBOnrampSessionToken";
 
@@ -38,7 +38,7 @@ Bun.serve({
             async function returning() {
                 //simply run the covalent ai agent and return response to frontend:
                 const body = await req.json()
-                const response = await runCovalentAgent(body)
+                const response = await runCovalentAgent(body, "")
                 return new Response(JSON.stringify(response))
             }
             return returning()

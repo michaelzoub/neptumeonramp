@@ -1,10 +1,11 @@
 import { Coinbase, Wallet } from "@coinbase/coinbase-sdk";
 import dotenv from 'dotenv';
 dotenv.config();
-const { COINBASE_API } = process.env
+const { COINBASE_API_SECRET } = process.env
+const { COINBASE_API_NAME } = process.env
 
-const apiKeyName = "Copy your secret API key name here."
-const apiKeyPrivateKey = "COINBASE_API"
+const apiKeyName = COINBASE_API_NAME 
+const apiKeyPrivateKey = COINBASE_API_SECRET
 
 export async function createWallet() {
     let wallet = await Wallet.create();

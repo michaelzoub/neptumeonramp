@@ -1,7 +1,6 @@
 
-const apiKey = ""
 export async function getSessionToken(address: string, assets: Array<string>) {
-    if (assets) {
+    if (assets.length > 1) {
 
     }
 
@@ -9,7 +8,6 @@ export async function getSessionToken(address: string, assets: Array<string>) {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${apiKey}`
         },
         body: JSON.stringify({
             addresses: [address],
@@ -17,5 +15,8 @@ export async function getSessionToken(address: string, assets: Array<string>) {
         }),
     })
     const body = await response.json()
+    console.log("getCBOnrampSession logs: ")
+    console.log(response)
+    console.log(body)
     return body
 } 

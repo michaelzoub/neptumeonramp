@@ -1,6 +1,7 @@
 import { runCovalentAgent } from "./utils/covalent/covalentAgent";
 import { createWallet } from "./utils/createWallet";
-import { getSessionToken } from "./utils/getCBOnrampSessionToken";
+import { getSessionToken } from "./utils/coinbase/getCBOnrampSessionToken";
+import { fundWallet } from "./utils/coinbase/fundWallet";
 
 console.log("Hello via Bun!");
 

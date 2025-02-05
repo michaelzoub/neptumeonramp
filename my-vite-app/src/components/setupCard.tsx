@@ -2,6 +2,7 @@ import { motion } from "framer-motion"
 import { useState } from "react"
 import { useAtom } from "jotai"
 import { extensionAtom } from "../atoms/extension"
+import { creationAtom } from "../atoms/creation"
 import { cardData } from "../data/cardData"
 import { onramp } from "../services/onramp"
 import { checkIfUserHasWallet } from "../utils/checkIfUserHasWallet"
@@ -10,6 +11,7 @@ export default function SetupCard() {
 
     const [amount, setAmount] = useState("")
     const [,setExtension] = useAtom(extensionAtom)
+    const [creation, setCreation] = useAtom(creationAtom)
 
     async function handleOnboard(wallet: string, extensionLink: string, extension:string, depositAmount: string) {
         const depositAmountParsed = Number(depositAmount)
@@ -18,17 +20,21 @@ export default function SetupCard() {
             return 
         }
         setExtension(true)
-        const ifUserHasWallet = checkIfUserHasWallet(extension)
+        const ifUserHasWallet = await checkIfUserHasWallet(extension)
         if (!ifUserHasWallet) {
             window.open(extensionLink, "_blank")
         }
-        //service function
         const result = await onramp(wallet, depositAmountParsed)
+        //open onrampUrl:
+        if (result.onrampUrl) {
+            setCreation(true)
+            window.open(result.onrampUrl, "_blank")
+        }
         console.log(result)
     }
 
     return (
-        <div className="w-fit text-zinc-200 mt-[150px]">
+        <div className={`${creation ? "hidden" : "w-fit text-zinc-200 mt-[150px]"}`}>
             <div className="flex flex-col">
                 {
                     cardData.map((e) => 

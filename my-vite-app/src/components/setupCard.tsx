@@ -6,12 +6,14 @@ import { creationAtom } from "../atoms/creation"
 import { cardData } from "../data/cardData"
 import { onramp } from "../services/onramp"
 import { checkIfUserHasWallet } from "../utils/checkIfUserHasWallet"
+import PrivateKey from "./privateKey"
 
 export default function SetupCard() {
 
     const [amount, setAmount] = useState("")
     const [,setExtension] = useAtom(extensionAtom)
     const [creation, setCreation] = useAtom(creationAtom)
+    const [privateKey, setPrivateKey] = useState("")
 
     async function handleOnboard(wallet: string, extensionLink: string, extension:string, depositAmount: string) {
         const depositAmountParsed = Number(depositAmount)
@@ -26,20 +28,22 @@ export default function SetupCard() {
         }
         const result = await onramp(wallet, depositAmountParsed)
         //open onrampUrl:
-        if (result.onrampUrl) {
-            setCreation(true)
-            window.open(result.onrampUrl, "_blank")
-        }
+        setCreation(true)
+        window.open(result.onrampUrl, "_blank")
+        setPrivateKey(result.privateKey.privateKey)
+        setCreation(false)
         console.log(result)
+        //add existingAccount state
     }
 
     return (
-        <div className={`${creation ? "hidden" : "w-fit text-zinc-200 mt-[150px]"}`}>
-            <div className="flex flex-col">
+        <div className={`${creation ? "hidden" : "w-fit text-zinc-200 mt-[25px]"}`}>
+            <PrivateKey privateKey={privateKey} styling={`${privateKey ? "visible" : "hidden"}`}></PrivateKey>
+            <div className={`${privateKey ? "hidden" : "flex flex-col"}`}>
                 {
                     cardData.map((e) => 
                         <motion.div
-                        className="flex flex-col w-[400px] h-[250px] gap-4 rounded-2xl bg-gradient-to-br from-zinc-950 to-zinc-900 p-6 text-left shadow-xl"
+                        className="flex flex-col w-full sm:w-[400px] h-auto sm:h-[250px] gap-4 rounded-2xl bg-gradient-to-br from-zinc-950 to-zinc-900 p-6 text-left shadow-xl"
                         whileHover={{
                             scale: 1.02,
                             rotateX: 5,

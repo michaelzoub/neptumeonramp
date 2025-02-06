@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@coinbase/coinbase-sdk": "^0.16.0",
-    "@covalenthq/ai-agent-sdk": "^0.2.0",
+    "@covalenthq/ai-agent-sdk": "^0.2.4",
     "@covalenthq/client-sdk": "^2.2.3",
     "dotenv": "^16.4.7"
   }

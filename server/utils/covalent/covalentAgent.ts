@@ -24,8 +24,6 @@ export async function runCovalentAgent(userMessage: string, address: string) {
     //run ApiServices to get information:
     const information = await ApiServices(address)
 
-    //create tools for 3:
-    const tools = await createTools(information)
 
     const agent = new Agent({
         name: "Onramp Assistant",
@@ -34,22 +32,22 @@ export async function runCovalentAgent(userMessage: string, address: string) {
             name: "gpt-4o-mini",
         },
         description: "Onramp assistant.",
-        instructions: ["You are an onramp assistant, your goal is to guide new users and answer any questions that arise."],
+        instructions: ["You are an onramp cryptocurrency/blockchain assistant, your goal is to guide new users and answer any questions that arise."],
         tools: {
-            tokenBalances: tools.TokenBalancesTool,
-            nftBalances: tools.NFTBalancesTool,
-            transactions: tools.TransactionsTool,
+
         },
     });
     
 
     const zee = new ZeeWorkflow({
-        description: userMessage,
-        output: "The goal of this workflow is to answer any initial questions the user has about cryptocurrencies, wallets, blockchains, crypto in general.",
+        description: ` User's question: "${userMessage}". Assist users in understanding cryptocurrency basics, depending on what the user asks.`,
+        output: "Provide guidance on whatever the user asks.",
         agents: { agent },
+        maxIterations: 2,
     });
 
     const response = await ZeeWorkflow.run(zee)
+    //const response = await agent.run()
     console.log(response)
 
     return response

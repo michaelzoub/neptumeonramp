@@ -34,7 +34,7 @@ export default function LlmSection() {
     }
 
     return (
-        <motion.div className="w-[400px] h-fit bg-zinc-900 rounded-xl p-2 text-zinc-400 cursor-default"
+        <motion.div className="w-[400px] h-fit bg-zinc-900 rounded-xl p-2 text-zinc-400 cursor-default border-[1px]"
         transition={{ type: "spring", stiffness: 100, damping: 10 }}
         >
             <motion.div className="flex flex-row justify-between p-1 items-center h-fit"
@@ -50,7 +50,7 @@ export default function LlmSection() {
                     initial: { rotate: 0 },
                     expand: { rotate: 90 }
                 }}
-                transition={{ type: "spring", damping:20, stiffness:450, duration: 0.1 }}
+                transition={{ type: "spring", damping: 20, stiffness: 450, duration: 0.1 }}
                 >
                 <motion.div
                     animate={hover ? (expand ? "" : "hover") : "initial"}

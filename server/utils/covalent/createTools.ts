@@ -6,7 +6,7 @@ export async function createTools(information: any) {
         description: "Retrieves the token balances for a given wallet address.",
         schema: information.tokenBalances,
         execute: async (params) => {
-            return `Token balances retrieved successfully for address: ${params.address}`;
+            return `Token balances retrieved successfully for address`;
         },
     });
     
@@ -15,7 +15,7 @@ export async function createTools(information: any) {
         description: "Fetches the NFT holdings for a specific wallet address.",
         schema: information.nfts,
         execute: async (params) => {
-            return `NFT balances retrieved successfully for address: ${params.address}`;
+            return `NFT balances retrieved successfully for address`;
         },
     });
     
@@ -24,7 +24,7 @@ export async function createTools(information: any) {
         description: "Retrieves the transaction history for a given wallet address.",
         schema: information.transactions,
         execute: async (params) => {
-            return `Transaction history retrieved successfully for address: ${params.address}`;
+            return `Transaction history retrieved successfully for address`;
         },
     });
     

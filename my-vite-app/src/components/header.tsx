@@ -25,7 +25,7 @@ export default function Header() {
 
           <div className="hidden md:flex items-center gap-2">
             <input className="p-2 rounded-xl bg-zinc-200 w-full" placeholder="Have a private key?" onChange={(e) => setPrivateKey(e.target.value)}></input>
-            <button className="w-fit rounded-xl p- border-[px]" onClick={() => existingAccountFunctionality}>
+            <button className="w-fit rounded-xl p- border-[px] p-1" onClick={() => existingAccountFunctionality}>
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"

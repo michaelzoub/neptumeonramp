@@ -25,7 +25,7 @@ export default function PrivateKey(props: {privateKey: string, styling: string})
                 ></textarea>
                 <button
                 onClick={copyToClipboard}
-                className="absolute right-3 top-3 p-2 rounded-lg bg-zinc-700 hover:bg-zinc-600 transition-all duration-200 text-zinc-200"
+                className="absolute right-3 top-5 p-2 rounded-lg bg-zinc-700 hover:bg-zinc-600 transition-all duration-200 text-zinc-200 my-auto"
                 aria-label="Copy to clipboard"
                 >
                 {copied ? <Check className="w-4 h-4 text-green-400" /> : <Copy className="w-4 h-4" />}

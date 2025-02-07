@@ -2,6 +2,7 @@ import { runCovalentAgent } from "./utils/covalent/covalentAgent";
 import { createWallet } from "./utils/createWallet";
 import { getSessionToken } from "./utils/coinbase/getCBOnrampSessionToken";
 import { fundWallet } from "./utils/coinbase/fundWallet";
+import { matchAddressId } from "./utils/matchAdressId";
 
 console.log("Hello via Bun!");
 
@@ -29,7 +30,10 @@ Bun.serve({
                 const body = await req.json()
                 const createObject = await createWallet()
                 //once wallet is setup, get session token to fund account:
-                const session = await getSessionToken(createObject.address.toString(), ["ETH"])
+                console.log(createObject.address)
+                const matched = matchAddressId(createObject.address.toString())
+                console.log(matched)
+                const session = await getSessionToken(matched, ["ETH"])
                 return new Response(JSON.stringify({
                     privateKey: createObject,
                     onrampUrl: session

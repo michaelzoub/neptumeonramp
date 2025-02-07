@@ -24,11 +24,12 @@ export default function SetupCard() {
         setExtension(true)
         const ifUserHasWallet = await checkIfUserHasWallet(extension)
         if (!ifUserHasWallet) {
-            window.open(extensionLink, "_blank")
+            //window.open(extensionLink, "_blank")
         }
         const result = await onramp(wallet, depositAmountParsed)
         //open onrampUrl:
         setCreation(true)
+        console.log(result.onrampUrl)
         window.open(result.onrampUrl, "_blank")
         setPrivateKey(result.privateKey.privateKey)
         setCreation(false)

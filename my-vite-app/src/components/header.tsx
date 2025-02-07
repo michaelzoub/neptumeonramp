@@ -2,14 +2,15 @@ import { motion } from "framer-motion";
 import { useAtom } from "jotai";
 import { useState } from "react";
 import { existingAccountAtom } from "../atoms/existingAccount";
+import { walletId } from "../atoms/walletId";
 
 export default function Header() {
 
-  const [privateKey, setPrivateKey] = useState("")
-  const [, setExistingAccount] = useAtom(existingAccountAtom)
+  const [walletIdParsed, setWalletIdParsed] = useAtom(walletId);
+  const [, setExistingAccount] = useAtom(existingAccountAtom);
 
   function existingAccountFunctionality() {
-    if (!privateKey) {
+    if (!walletIdParsed) {
       return
     }
     setExistingAccount(true)
@@ -24,7 +25,7 @@ export default function Header() {
             </a>
 
           <div className="hidden md:flex items-center gap-2">
-            <input className="p-2 rounded-xl bg-zinc-200 w-full" placeholder="Have a private key?" onChange={(e) => setPrivateKey(e.target.value)}></input>
+            <input className="p-2 rounded-xl bg-zinc-200 w-full" placeholder="Have a Wallet ID?" onChange={(e) => setWalletIdParsed(e.target.value)}></input>
             <button className="w-fit rounded-xl p- border-[px] p-1" onClick={() => existingAccountFunctionality}>
             <svg
                 xmlns="http://www.w3.org/2000/svg"

@@ -3,6 +3,7 @@ import { createWallet } from "./utils/createWallet";
 import { getSessionToken } from "./utils/coinbase/getCBOnrampSessionToken";
 import { fundWallet } from "./utils/coinbase/fundWallet";
 import { matchAddressId } from "./utils/matchAdressId";
+import { transferToExternalWallet } from "./utils/coinbase/transferToExternalWallet";
 
 console.log("Hello via Bun!");
 
@@ -52,6 +53,15 @@ Bun.serve({
                 return new Response(JSON.stringify(response), { headers: corsHeaders })
             }
             return returning()
+        }
+
+        if (url.pathname === "/transfer") {
+            async function transfer() {
+                const body = await req.json();
+                await transferToExternalWallet(body.address, body.amount)
+                return new Response(JSON.stringify("Successfully sent."), { headers: corsHeaders })
+            }
+            return transfer()
         }
 
         return new Response("Bun!", { headers: corsHeaders });

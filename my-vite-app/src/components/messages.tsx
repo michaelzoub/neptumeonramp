@@ -39,7 +39,7 @@ export default function Messages({color, secondary}: {color: string, secondary: 
     }, [message, messages])
 
     return (
-        <div className="z-100 flex flex-col h-[78%] mx-2 py-0 border-neutral-600 scrollbar">
+        <div className="z-100 flex flex-col h-[78%] mx-2 py-0 border-zinc-600 scrollbar">
             <div className="z-100 sidebar flex flex-col w-full h-full gap-2 overflow-y-auto py-2 scrollbar" ref={messageRef}>
                 {messages.map((message) => (
                     <motion.div className={`z-100 flex flex-col h-fit w-fit max-w-[150px] ${message.sender === "user" ? "self-end" : "self-start"}`} key={message.id}
@@ -52,10 +52,10 @@ export default function Messages({color, secondary}: {color: string, secondary: 
                         damping: 45,
                     }}
                     >
-                        <div className={`text-neutral-200 shadow-lg ${
+                        <div className={`text-zinc-200 shadow-lg ${
                             message.sender === "user" 
                                 ? ` border-[1px] border-${secondary} self-end text-left text-black`
-                                : `text-left bg-neutral-700 border-[1px] border-neutral-600`
+                                : `text-left bg-zinc-800 border-[1px] border-zinc-600`
                         } break-words rounded-xl p-2 flex flex-col w-fit max-w-full h-fit`}
                         style={{
                             backgroundColor: (message.sender === "user" ? `${color}` : ""), 
@@ -64,7 +64,7 @@ export default function Messages({color, secondary}: {color: string, secondary: 
                         >
                             {message.message}
                         </div>
-                        <div className={`${message.sender === "user" ? "text-right" : "text-left"} text-xs mx-1 my-1 text-neutral-400`}>{message.timestamp}</div>
+                        <div className={`${message.sender === "user" ? "text-right" : "text-left"} text-xs mx-1 my-1 text-zinc-400`}>{message.timestamp}</div>
                     </motion.div>
                 ))}
             </div>

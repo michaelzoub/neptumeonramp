@@ -3,6 +3,7 @@ import { useAtom } from "jotai"
 import { useState } from "react"
 import { transferToExternalWallet } from "../services/transferExternalWallet"
 import { walletId } from "../atoms/walletId"
+import { succesfullySent } from "../atoms/succesfullySent"
 
 export default function ExistingAccountPage() {
 
@@ -10,10 +11,14 @@ export default function ExistingAccountPage() {
     const [amount, setAmount] = useState("")
     const [address, setAddress] = useState("")
     const [walletIdParsed] = useAtom(walletId)
+    const [, setSuccess] = useAtom(succesfullySent)
 
     async function handleSend(targetAddress: string, amount:string) {
         const convertedAmount = Number(amount)
-        await transferToExternalWallet(walletIdParsed, targetAddress, convertedAmount)
+        const result = await transferToExternalWallet(walletIdParsed, targetAddress, convertedAmount)
+        if (result) {
+            setSuccess(true);
+        }
         return
     }
 

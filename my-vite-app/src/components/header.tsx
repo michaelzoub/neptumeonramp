@@ -1,6 +1,4 @@
-import { motion } from "framer-motion";
 import { useAtom } from "jotai";
-import { useState } from "react";
 import { existingAccountAtom } from "../atoms/existingAccount";
 import { walletId } from "../atoms/walletId";
 

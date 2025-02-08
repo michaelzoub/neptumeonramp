@@ -7,6 +7,7 @@ export async function transferToExternalWallet(walletId: string, targetAddress: 
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
+            walletId: walletId,
             address: targetAddress,
             amount: amount
         })

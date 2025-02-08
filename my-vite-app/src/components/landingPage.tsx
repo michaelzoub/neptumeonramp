@@ -2,7 +2,7 @@ import SetupCard from "./setupCard"
 import LlmSection from "./llmSection"
 import Header from "./header"
 import LoadingPage from "./loadingPage"
-import PrivateKey from "./privateKey"
+import SuccessMessage from "./successMessage"
 
 export default function LandingPage() {
     return (
@@ -12,6 +12,7 @@ export default function LandingPage() {
             <LoadingPage></LoadingPage>
             <SetupCard></SetupCard>
             <LlmSection></LlmSection>
+            <SuccessMessage></SuccessMessage>
         </main>
     )
 }

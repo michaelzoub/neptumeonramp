@@ -1,7 +1,7 @@
 import { motion } from "framer-motion"
 import { useState } from "react"
 import Messages from "./messages"
-import { messageAtom, messagesAtom } from "../atoms/messages"
+import { messagesAtom } from "../atoms/messages"
 import { useAtom } from "jotai"
 import { questionOnramp } from "../services/question"
 

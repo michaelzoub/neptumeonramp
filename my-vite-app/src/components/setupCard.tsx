@@ -24,7 +24,7 @@ export default function SetupCard() {
         setExtension(true)
         const ifUserHasWallet = await checkIfUserHasWallet(extension)
         if (!ifUserHasWallet) {
-            //window.open(extensionLink, "_blank")
+            console.log(extensionLink)
         }
         const result = await onramp(wallet, depositAmountParsed)
         //open onrampUrl:

@@ -58,7 +58,7 @@ Bun.serve({
         if (url.pathname === "/transfer") {
             async function transfer() {
                 const body = await req.json();
-                await transferToExternalWallet(body.address, body.amount)
+                await transferToExternalWallet(body.walletId, body.address, body.amount)
                 return new Response(JSON.stringify("Successfully sent."), { headers: corsHeaders })
             }
             return transfer()

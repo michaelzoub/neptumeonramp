@@ -31,20 +31,20 @@ export default function SetupCard() {
         setCreation(true)
         console.log(result.onrampUrl)
         window.open(result.onrampUrl, "_blank")
-        setPrivateKey(result.privateKey.privateKey)
+        setPrivateKey(result.privateKey)
         setCreation(false)
         console.log(result)
         //add existingAccount state
     }
 
     return (
-        <div className={`${creation ? "hidden" : "w-fit text-zinc-200 mt-[25px]"}`}>
+        <div className={`${creation ? "hidden" : "w-fit text-zinc-200"}`}>
             <PrivateKey privateKey={privateKey} styling={`${privateKey ? "visible" : "hidden"}`}></PrivateKey>
             <div className={`${privateKey ? "hidden" : "flex flex-col"}`}>
                 {
                     cardData.map((e) => 
                         <motion.div
-                        className="flex flex-col w-full sm:w-[400px] h-auto sm:h-[250px] gap-4 rounded-2xl bg-gradient-to-br from-zinc-950 to-zinc-900 p-6 text-left shadow-xl"
+                        className="flex flex-col w-[290px] sm:w-[400px] h-auto sm:h-[250px] gap-4 rounded-2xl bg-gradient-to-br from-zinc-950 to-zinc-900 p-6 text-left shadow-xl"
                         whileHover={{
                             scale: 1.02,
                             rotateX: 5,

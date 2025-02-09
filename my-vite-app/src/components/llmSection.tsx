@@ -34,7 +34,7 @@ export default function LlmSection() {
     }
 
     return (
-        <motion.div className="w-[400px] h-fit bg-zinc-900 rounded-xl p-2 text-zinc-400 cursor-default border-[1px]"
+        <motion.div className="w-[290px] sm:w-[400px] h-fit bg-zinc-900 rounded-xl p-2 text-zinc-400 cursor-default border-[1px]"
         transition={{ type: "spring", stiffness: 100, damping: 10 }}
         >
             <motion.div className="flex flex-row justify-between p-1 items-center h-fit"
@@ -43,7 +43,7 @@ export default function LlmSection() {
                 onClick={() => setExpand((e) => !e)}
                 whileTap={{scale: 1.01}}
             >
-                <div>Ask or create an account with our LLM instead</div>
+                <div className="text-left">Ask or create an account with our LLM instead</div>
                 <motion.div 
                 animate={expand ? "expand" : "initial"}
                 variants={{

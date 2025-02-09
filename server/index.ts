@@ -2,7 +2,8 @@ import { runCovalentAgent } from "./utils/covalent/covalentAgent";
 import { createWallet } from "./utils/createWallet";
 import { getSessionToken } from "./utils/coinbase/getCBOnrampSessionToken";
 import { fundWallet } from "./utils/coinbase/fundWallet";
-import { matchAddressId } from "./utils/matchAdressId";
+import { matchWalletId } from "./utils/matchWalletId";
+import { matchAddressId } from "./utils/matchAddressId";
 import { transferToExternalWallet } from "./utils/coinbase/transferToExternalWallet";
 
 console.log("Hello via Bun!");
@@ -32,11 +33,12 @@ Bun.serve({
                 const createObject = await createWallet()
                 //once wallet is setup, get session token to fund account:
                 console.log(createObject.address)
-                const matched = matchAddressId(createObject.address.toString())
-                console.log(matched)
-                const session = await getSessionToken(matched, ["ETH"])
+                const matchedAddress = matchAddressId(createObject.address.toString())
+                const matchedWallet = matchWalletId(createObject.address.toString())
+                console.log(matchedAddress)
+                const session = await getSessionToken(matchedAddress, ["ETH"])
                 return new Response(JSON.stringify({
-                    privateKey: createObject,
+                    privateKey: matchedWallet,
                     onrampUrl: session
                 }), { headers: corsHeaders })
             }
@@ -62,6 +64,10 @@ Bun.serve({
                 return new Response(JSON.stringify("Successfully sent."), { headers: corsHeaders })
             }
             return transfer()
+        }
+
+        if (url.pathname === "balance") {
+            
         }
 
         return new Response("Bun!", { headers: corsHeaders });

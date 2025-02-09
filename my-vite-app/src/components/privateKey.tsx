@@ -16,7 +16,7 @@ export default function PrivateKey(props: {privateKey: string, styling: string})
 
     return (
         <div className={`flex flex-col w-full sm:w-[400px] h-auto sm:h-[250px] gap-4 rounded-2xl bg-gradient-to-br from-zinc-950 to-zinc-900 p-6 text-left shadow-xl ${props.styling}`}>
-            <h2 className="text-zinc-200 font-semibold">Make sure to copy the Wallet ID somewhere safe, this will be your access to your funds!</h2>
+            <h2 className=" font-semibold text-red-300">Make sure to copy the Wallet ID somewhere safe, this will be your access to your funds!</h2>
             <div className="relative flex h-full gap-4">
                 <textarea
                 className="bg-zinc-800 h-full w-full rounded-xl text-zinc-200 p-4 pr-12 resize-none focus:outline-none focus:ring-2 focus:ring-zinc-700"

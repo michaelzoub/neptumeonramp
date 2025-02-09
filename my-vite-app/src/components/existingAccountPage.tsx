@@ -22,9 +22,9 @@ export default function ExistingAccountPage() {
     useEffect(() => {
         async function run() {
             //deformat
-            const deformattedWallet = deformatWalletObject(walletIdParsed)
-            const getBalance = await getExistingAccountBalance(deformattedWallet)
-            setBalance(getBalance)
+            //const deformattedWallet = deformatWalletObject(walletIdParsed)
+            //const getBalance = await getExistingAccountBalance(deformattedWallet)
+            //setBalance(getBalance)
         }
         run()
     }, [])

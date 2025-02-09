@@ -19,7 +19,7 @@ export default function PrivateKey(props: {privateKey: string, styling: string})
             <h2 className=" font-semibold text-red-300">Make sure to copy the Wallet ID somewhere safe, this will be your access to your funds!</h2>
             <div className="relative flex h-full gap-4">
                 <textarea
-                className="bg-zinc-800 h-full w-full rounded-xl text-zinc-200 p-4 pr-12 resize-none focus:outline-none focus:ring-2 focus:ring-zinc-700"
+                className="scrollbar bg-zinc-800 h-full w-full rounded-xl text-zinc-200 p-4 pr-12 resize-none focus:outline-none focus:ring-2 focus:ring-zinc-700"
                 value={props.privateKey}
                 readOnly
                 ></textarea>

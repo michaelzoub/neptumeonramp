@@ -1,19 +1,24 @@
 import { useAtom } from "jotai";
 import { existingAccountAtom } from "../atoms/existingAccount";
 import { walletId } from "../atoms/walletId";
+import { getExistingAccountBalance } from "../services/getExistingAccountBalance";
+import { deformatWalletObject } from "../utils/deformatWalletObject";
 
 export default function Header() {
 
   const [walletIdParsed, setWalletIdParsed] = useAtom(walletId);
   const [, setExistingAccount] = useAtom(existingAccountAtom);
 
-  function existingAccountFunctionality() {
+  async function existingAccountFunctionality() {
     console.log(walletIdParsed)
     if (!walletIdParsed) {
       return
     }
     console.log("Set existing accountg hit.")
     setExistingAccount(true)
+    const deformattedWallet = deformatWalletObject(walletIdParsed)
+    const balance = await getExistingAccountBalance(deformattedWallet)
+    console.log(balance)
   }
 
   return (

@@ -1,1 +1,1 @@
-export const apiEndpoint = "http://localhost:3000"
+export const apiEndpoint = "neptumeonramp-production.up.railway.app"

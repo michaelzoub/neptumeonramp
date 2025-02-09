@@ -39,13 +39,20 @@ export default function SetupCard() {
         console.log(result.session)
         window.open(result.session, "_blank")
         const formattedWallet = formatWalletObject(result.walletInfo)
+        console.log(formattedWallet)
         setPrivateKey(formattedWallet)
         setCreation(false)
         console.log(result)
         //add existingAccount state, then shows the withdraw modal, we also need to get balance (unfortunately need to call again)
         const deformattedWallet = deformatWalletObject(formattedWallet)
         const balance = await getExistingAccountBalance(deformattedWallet)
-        setWalletIdBalance(balance)
+        console.log(balance)
+        if (!balance) {
+            setWalletIdBalance(0.0)
+        } else {
+            //setWalletIdBalance(balance)
+        }
+        setWalletIdBalance(0.0)
         setExistingAccount(true)
     }
 

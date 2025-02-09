@@ -30,13 +30,13 @@ export default function Messages({color, secondary}: {color: string, secondary: 
     }, [])
 
     useEffect(() => {
-        const curr = messageRef.current;
+        const curr = messageRef.current
         if (curr) {
             setTimeout(() => {
-                curr.scrollTop = curr.scrollHeight;
+                curr.scrollTop = curr.scrollHeight
             }, 0)
         }
-    }, [message, messages])
+    }, [message, messages]) 
 
     return (
         <div className="z-100 flex flex-col h-[78%] mx-2 py-0 border-zinc-600 scrollbar">
@@ -60,7 +60,7 @@ export default function Messages({color, secondary}: {color: string, secondary: 
                         style={{
                             backgroundColor: (message.sender === "user" ? `${color}` : ""), 
                             borderColor: (message.sender === "user" ? `${secondary}` : ""), 
-                          }}
+                        }}
                         >
                             {message.message}
                         </div>

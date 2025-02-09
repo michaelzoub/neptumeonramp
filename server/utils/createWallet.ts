@@ -21,11 +21,10 @@ export async function createWallet() {
         console.log(`Address: ${address}`);
     
         //this is the privateKey, make sure headers carefully transport this so privy can interact with it
-        let privateKey = address.export();
-        return {
-            privateKey: privateKey,
-            address: address
-        }
+        //let privateKey = address.export();
+        let data = wallet.export();
+        console.log(data);
+        return data
     } catch (error) {
         console.error(error)
         return {

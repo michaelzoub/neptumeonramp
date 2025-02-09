@@ -8,6 +8,7 @@ import { walletIdBalanceAtom } from "../atoms/walletIdBalance"
 import { succesfullySent } from "../atoms/succesfullySent"
 import { motion } from "framer-motion"
 import { getExistingAccountBalance } from "../services/getExistingAccountBalance"
+import { deformatWalletObject } from "../utils/deformatWalletObject"
 
 export default function ExistingAccountPage() {
 
@@ -20,7 +21,9 @@ export default function ExistingAccountPage() {
 
     useEffect(() => {
         async function run() {
-            const getBalance = await getExistingAccountBalance(walletIdParsed)
+            //deformat
+            const deformattedWallet = deformatWalletObject(walletIdParsed)
+            const getBalance = await getExistingAccountBalance(deformattedWallet)
             setBalance(getBalance)
         }
         run()

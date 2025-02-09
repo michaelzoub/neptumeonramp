@@ -6,7 +6,12 @@ import { creationAtom } from "../atoms/creation"
 import { cardData } from "../data/cardData"
 import { onramp } from "../services/onramp"
 import { checkIfUserHasWallet } from "../utils/checkIfUserHasWallet"
+import { getExistingAccountBalance } from "../services/getExistingAccountBalance"
 import PrivateKey from "./privateKey"
+import { existingAccountAtom } from "../atoms/existingAccount"
+import { walletIdBalanceAtom } from "../atoms/walletIdBalance"
+import { formatWalletObject } from "../utils/formatWalletObject"
+import { deformatWalletObject } from "../utils/deformatWalletObject"
 
 export default function SetupCard() {
 
@@ -14,6 +19,8 @@ export default function SetupCard() {
     const [,setExtension] = useAtom(extensionAtom)
     const [creation, setCreation] = useAtom(creationAtom)
     const [privateKey, setPrivateKey] = useState("")
+    const [, setExistingAccount] = useAtom(existingAccountAtom)
+    const [, setWalletIdBalance] = useAtom(walletIdBalanceAtom)
 
     async function handleOnboard(wallet: string, extensionLink: string, extension:string, depositAmount: string) {
         const depositAmountParsed = Number(depositAmount)
@@ -29,12 +36,17 @@ export default function SetupCard() {
         const result = await onramp(wallet, depositAmountParsed)
         //open onrampUrl:
         setCreation(true)
-        console.log(result.onrampUrl)
-        window.open(result.onrampUrl, "_blank")
-        setPrivateKey(result.privateKey)
+        console.log(result.session)
+        window.open(result.session, "_blank")
+        const formattedWallet = formatWalletObject(result.walletInfo)
+        setPrivateKey(formattedWallet)
         setCreation(false)
         console.log(result)
-        //add existingAccount state
+        //add existingAccount state, then shows the withdraw modal, we also need to get balance (unfortunately need to call again)
+        const deformattedWallet = deformatWalletObject(formattedWallet)
+        const balance = await getExistingAccountBalance(deformattedWallet)
+        setWalletIdBalance(balance)
+        setExistingAccount(true)
     }
 
     return (

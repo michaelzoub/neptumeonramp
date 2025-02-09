@@ -1,6 +1,7 @@
 import { Coinbase } from "@coinbase/coinbase-sdk";
 
 export async function transferToExternalWallet(wallet: any, targetAddress: string, amount: number) {
+    //first instantiate
     try {
         let transfer = await wallet.createTransfer({
             amount: amount,

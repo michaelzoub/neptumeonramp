@@ -91,12 +91,12 @@ export default function LlmSection() {
                 transition={{ duration: 0.2 }}
                 >
                 <input
-                    className="grow p-2 bg-zinc-800 w-full rounded-2xl"
-                    placeholder="Send msg"
+                    className="grow p-2 m-2 bg-zinc-800 w-full rounded-2xl"
+                    placeholder="Ask away!"
                     onChange={(e) => setUserMessage(e.target.value)}
                 />
                 <button
-                    className="w-fit p-2 bg-zinc-800 rounded-2xl"
+                    className="w-fit p-2 my-2 mr-1 bg-zinc-800 rounded-2xl"
                     onClick={handleMessageSend}
                 >
                     Send

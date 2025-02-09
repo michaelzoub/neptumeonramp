@@ -5,6 +5,8 @@ import { fundWallet } from "./utils/coinbase/fundWallet";
 import { matchWalletId } from "./utils/matchWalletId";
 import { matchAddressId } from "./utils/matchAddressId";
 import { transferToExternalWallet } from "./utils/coinbase/transferToExternalWallet";
+import { getWalletBalance } from "./utils/coinbase/getWalletBalance";
+import { reinstantiateWallet } from "./utils/coinbase/reinstantiateWallet";
 
 console.log("Hello via Bun!");
 
@@ -32,14 +34,15 @@ Bun.serve({
                 const body = await req.json()
                 const createObject = await createWallet()
                 //once wallet is setup, get session token to fund account:
-                console.log(createObject.address)
-                const matchedAddress = matchAddressId(createObject.address.toString())
-                const matchedWallet = matchWalletId(createObject.address.toString())
-                console.log(matchedAddress)
+                //console.log(createObject.address)
+                const matchedAddress = matchAddressId(createObject.toString())
+                //const matchedWallet = matchWalletId(createObject.address.toString())
+                console.log("CreateObject: ")
+                console.log(createObject)
                 const session = await getSessionToken(matchedAddress, ["ETH"])
                 return new Response(JSON.stringify({
-                    privateKey: matchedWallet,
-                    onrampUrl: session
+                    walletInfo: createObject,
+                    session: session
                 }), { headers: corsHeaders })
             }
             return  onramp()
@@ -60,14 +63,26 @@ Bun.serve({
         if (url.pathname === "/transfer") {
             async function transfer() {
                 const body = await req.json();
-                await transferToExternalWallet(body.walletId, body.address, body.amount)
+                const instantiatedWallet = await reinstantiateWallet(body.walletId)
+                const walletId = matchWalletId(instantiatedWallet.toString())
+                const address = matchAddressId(instantiatedWallet.toString())
+                console.log(instantiatedWallet)
+                await transferToExternalWallet(walletId, address, body.amount)
                 return new Response(JSON.stringify("Successfully sent."), { headers: corsHeaders })
             }
             return transfer()
         }
 
-        if (url.pathname === "balance") {
-            
+        if (url.pathname === "/balance") {
+            async function balance() {
+                const body = await req.json()
+                console.log(body)
+                //first reinstantiate
+                const instantiatedWallet = await reinstantiateWallet(body)
+                const balance = await getWalletBalance(instantiatedWallet)
+                return new Response(JSON.stringify(balance), { headers: corsHeaders })
+            }
+            return balance()
         }
 
         return new Response("Bun!", { headers: corsHeaders });

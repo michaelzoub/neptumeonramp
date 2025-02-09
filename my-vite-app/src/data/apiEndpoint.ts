@@ -1,1 +1,1 @@
-export const apiEndpoint = "https://neptumeonramp-production.up.railway.app/"
+export const apiEndpoint = "https://neptumeonramp-production.up.railway.app"
